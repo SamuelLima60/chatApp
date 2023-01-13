@@ -1,0 +1,29 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../core/services/notification/chat_notification_service.dart';
+
+class NotificationsPage extends StatelessWidget {
+  const NotificationsPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final service = Provider.of<ChatNotificationService>(context);
+    final items = service.items;
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Minhas Notificações'),
+      ),
+      body: ListView.builder(
+        itemCount: service.itemsCount,
+        itemBuilder: (ctx, i) {
+          return ListTile(
+            title: Text(items[i].title),
+            subtitle: Text(items[i].body),
+            onTap: () => service.remove(i),
+          );
+        },
+      ),
+    );
+  }
+}
